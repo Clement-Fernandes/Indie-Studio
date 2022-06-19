@@ -53,8 +53,10 @@ void Object::Image::operator ()(nlohmann::json const &jsonData)
 
 void Object::Image::draw()
 {
-    if (_isEnable)
-        DrawTextureEx(_imageTexture, (Vector2){_imagePosition.getX(), _imagePosition.getY()}, _rotation, _imageScale, WHITE);
+    if (_isEnable) {
+        Vector2 vector = { _imagePosition.getX(), _imagePosition.getY() };
+        DrawTextureEx(_imageTexture, vector, _rotation, _imageScale, WHITE);
+    }
 }
 
 void Object::Image::enable()

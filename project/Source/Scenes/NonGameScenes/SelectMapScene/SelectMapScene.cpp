@@ -7,7 +7,6 @@
 
 #include <functional>
 #include <vector>
-#include <dirent.h>
 #include <cmath>
 
 #include "tools.hpp"

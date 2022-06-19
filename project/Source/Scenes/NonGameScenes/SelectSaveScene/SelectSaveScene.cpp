@@ -6,6 +6,9 @@
 */
 
 #include <dirent.h>
+// #include <boost/filesystem.hpp>
+#include <filesystem>
+// DIRENT TO REPLACE WITH BOOST LIBRARY
 
 #include <functional>
 #include <iostream>
@@ -62,23 +65,20 @@ bool Scene::SelectSaveScene::isGoodSaveFile(std::string const &filename, std::st
 
 std::vector<std::string> Scene::SelectSaveScene::getFilesListFromDirectory(std::string const &directory, std::string const &suffix)
 {
-    DIR *dir = opendir(directory.c_str());
-    struct dirent *diread;
     std::vector<std::string> files;
     std::string file;
 
-    _directory = directory;
-    if (dir == nullptr)
-        throw Error::FileError("Failed to open " + directory + " directory");
-    while ((diread = readdir(dir)) != nullptr) {
-        file = diread->d_name;
-        if (isGoodSaveFile(file, suffix)) {
+    for (auto const& dir_entry : std::filesystem::directory_iterator(directory))
+    {
+        file = dir_entry.path();
+        if (isGoodSaveFile(dir_entry.path(), suffix)) {
             file.erase(file.size() - suffix.size());
             files.push_back(file);
         }
+        std::cout << dir_entry.path() << std::endl;
     }
-    closedir(dir);
-    return files;
+
+    return (files);
 }
 
 Scene::SelectSaveScene::SelectSaveScene(std::shared_ptr<Settings> settings, std::shared_ptr<GameSettings> gameSettings, std::vector<std::unique_ptr<Object::Image>> &parallax, std::function<void(void)> applyGameSettings) : AScene(settings), _gameSettings(gameSettings),

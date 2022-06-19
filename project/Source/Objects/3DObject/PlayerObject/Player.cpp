@@ -50,7 +50,8 @@ void Object::Player::move(Position const &position, Position const &direction)
 {
     animation(0);
 
-    _model.transform = MatrixRotateXYZ((Vector3){ DEG2RAD * direction.getX(), DEG2RAD * direction.getY(), DEG2RAD * direction.getZ()});
+    Vector3 vector = { DEG2RAD * direction.getX(), DEG2RAD * direction.getY(), DEG2RAD * direction.getZ() };
+    _model.transform = MatrixRotateXYZ(vector);
     Position tmp = position;
     _position += (tmp * _speed);
 }

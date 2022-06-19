@@ -26,7 +26,8 @@ void Object::Bonus::draw()
         (getPosition().getY() + 5),
         getPosition().getZ()
     };
-    _model.transform = MatrixRotateXYZ((Vector3){ DEG2RAD * direction.getX(), DEG2RAD * direction.getY(), DEG2RAD * direction.getZ()});
+    Vector3 vector = { DEG2RAD * direction.getX(), DEG2RAD * direction.getY(), DEG2RAD * direction.getZ() };
+    _model.transform = MatrixRotateXYZ(vector);
     if (_isEnable)
         DrawModel(getModel(), modelPosition, _bonusScale, WHITE);
 }

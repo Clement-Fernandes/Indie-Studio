@@ -96,7 +96,8 @@ void Object::Button::draw()
     else
         _sourceRec.y = _state * _frameHeight;
     if (_isEnable) {
-        DrawTextureRec(_buttonTexture, _sourceRec, (Vector2){ _buttonRect.x, _buttonRect.y }, WHITE); // Draw button frame
+        Vector2 vector = { _buttonRect.x, _buttonRect.y };
+        DrawTextureRec(_buttonTexture, _sourceRec, vector, WHITE); // Draw button frame
         _text.draw();
         _image.draw();
     }

@@ -13,6 +13,8 @@ include(cmake-modules/Findraylib.cmake)
 # include json into build
 include(cmake-modules/Findjson.cmake)
 
+find_package(Boost COMPONENTS filesystem REQUIRED)
+
 # specify the sources
 file(GLOB SOURCES
     Source/Audio/*.cpp
@@ -171,10 +173,12 @@ if (UNIT_TEST)
     target_link_libraries(unit_tests criterion)
     target_link_libraries(unit_tests nlohmann_json::nlohmann_json)
     target_link_libraries(unit_tests raylib)
+    target_link_libraries(unit_tests ${Boost_FILESYSTEM_LIBRARY})
 else()
     add_executable(bomberman Source/main.cpp ${SOURCES})
     target_link_libraries(bomberman nlohmann_json::nlohmann_json)
     target_link_libraries(bomberman raylib)
+    target_link_libraries(bomberman ${Boost_FILESYSTEM_LIBRARY})
 endif(UNIT_TEST)
 unset(UNIT_TEST CACHE) # Unset the cache variable
 
