@@ -5,10 +5,8 @@
 ** SelectSaveScene
 */
 
-#include <dirent.h>
-// #include <boost/filesystem.hpp>
-#include <filesystem>
-// DIRENT TO REPLACE WITH BOOST LIBRARY
+#include <boost/filesystem.hpp>
+using namespace boost::filesystem;
 
 #include <functional>
 #include <iostream>
@@ -68,14 +66,16 @@ std::vector<std::string> Scene::SelectSaveScene::getFilesListFromDirectory(std::
     std::vector<std::string> files;
     std::string file;
 
-    for (auto const& dir_entry : std::filesystem::directory_iterator(directory))
+    path p(directory);
+    directory_iterator end_itr;
+
+    for (directory_iterator itr(p); itr != end_itr; ++itr)
     {
-        file = dir_entry.path();
-        if (isGoodSaveFile(dir_entry.path(), suffix)) {
+        file = itr->path().string();
+        if (isGoodSaveFile(file, suffix)) {
             file.erase(file.size() - suffix.size());
             files.push_back(file);
         }
-        std::cout << dir_entry.path() << std::endl;
     }
 
     return (files);
